@@ -178,31 +178,42 @@ public class MainFrame extends javax.swing.JFrame {
             CaptureArea.setLocation(mouseLocation.x - MoveStartingPoint.x, mouseLocation.y - MoveStartingPoint.y);
             StartingPoint = new Point(evt.getXOnScreen() - evt.getX(), evt.getYOnScreen() - evt.getY());
             EndingPoint = new Point(StartingPoint.x + CaptureArea.getWidth(), StartingPoint.y + CaptureArea.getHeight());
-        } else if (CaptureArea.getCursor() == Cursor.getPredefinedCursor(Cursor.NW_RESIZE_CURSOR)) {
-            //Top-Left
-        } else if (CaptureArea.getCursor() == Cursor.getPredefinedCursor(Cursor.NE_RESIZE_CURSOR)) {
-            //Top-Right
-        } else if (CaptureArea.getCursor() == Cursor.getPredefinedCursor(Cursor.SW_RESIZE_CURSOR)) {
-            //Bottom-Left
-        } else if (CaptureArea.getCursor() == Cursor.getPredefinedCursor(Cursor.SE_RESIZE_CURSOR)) {
-            //Bottom Right
-        } else if (CaptureArea.getCursor() == Cursor.getPredefinedCursor(Cursor.N_RESIZE_CURSOR)) {
-            //Top
-                        CaptureArea.setLocation(StartingPoint);
-            CaptureArea.setLocation(evt.getPoint().x, evt.getPoint().y );
+        } else {
+            PointerInfo mouse = MouseInfo.getPointerInfo();
+            Point mouseLocation = mouse.getLocation();
 
-        } else if (CaptureArea.getCursor() == Cursor.getPredefinedCursor(Cursor.E_RESIZE_CURSOR)) {
-            //Left
-        } else if (CaptureArea.getCursor() == Cursor.getPredefinedCursor(Cursor.W_RESIZE_CURSOR)) {
-            //Right
-        } else if (CaptureArea.getCursor() == Cursor.getPredefinedCursor(Cursor.S_RESIZE_CURSOR)) {
-            //Bottom
+            if (CaptureArea.getCursor() == Cursor.getPredefinedCursor(Cursor.NW_RESIZE_CURSOR)) {
+                //Top-Left
+            } else if (CaptureArea.getCursor() == Cursor.getPredefinedCursor(Cursor.NE_RESIZE_CURSOR)) {
+                //Top-Right
+            } else if (CaptureArea.getCursor() == Cursor.getPredefinedCursor(Cursor.SW_RESIZE_CURSOR)) {
+                //Bottom-Left
+            } else if (CaptureArea.getCursor() == Cursor.getPredefinedCursor(Cursor.SE_RESIZE_CURSOR)) {
+                //Bottom Right
+            } else if (CaptureArea.getCursor() == Cursor.getPredefinedCursor(Cursor.N_RESIZE_CURSOR)) {
+                //Top
+                CaptureArea.setLocation(evt.getXOnScreen() - evt.getX(), mouseLocation.y);
+                CaptureArea.setSize(CaptureArea.getSize().width, CaptureArea.getSize().height - evt.getY());
+            } else if (CaptureArea.getCursor() == Cursor.getPredefinedCursor(Cursor.E_RESIZE_CURSOR)) {
+                //Left
+                CaptureArea.setLocation(mouseLocation.x, evt.getYOnScreen() - evt.getY());
+                CaptureArea.setSize((int) (CaptureArea.getSize().width+(StartingPoint.getX()-evt.getXOnScreen())), CaptureArea.getSize().height);
+               System.out.println(CaptureArea.getSize().width+(StartingPoint.getX()-CaptureArea.getLocation().x));
+             /////////////////////////////////
+            } else if (CaptureArea.getCursor() == Cursor.getPredefinedCursor(Cursor.W_RESIZE_CURSOR)) {
+                //Right
+                CaptureArea.setSize(mouseLocation.x - CaptureArea.getLocation().x, CaptureArea.getSize().height);
+            } else if (CaptureArea.getCursor() == Cursor.getPredefinedCursor(Cursor.S_RESIZE_CURSOR)) {
+                //Bottom
+                CaptureArea.setSize(CaptureArea.getSize().width, mouseLocation.y - CaptureArea.getLocation().y);
+            }
         }
     }//GEN-LAST:event_CaptureAreaMouseDragged
 
     private void CaptureAreaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_CaptureAreaMousePressed
         MoveStartingPoint = new Point(evt.getX(), evt.getY());
-                    System.out.println("Pressed: "+MoveStartingPoint.x+","+MoveStartingPoint.y);
+        StartingPoint=new Point(evt.getXOnScreen(),evt.getYOnScreen());
+        System.out.println("Pressed: " + MoveStartingPoint.x + "," + MoveStartingPoint.y);
 
     }//GEN-LAST:event_CaptureAreaMousePressed
 
